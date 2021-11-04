@@ -144,7 +144,7 @@ namespace ProductionSystem
             this.groupBox3.Size = new System.Drawing.Size(481, 150);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Бюджет";
+            this.groupBox3.Text = "Бюджет*";
             // 
             // checkListPrice
             // 
@@ -166,7 +166,7 @@ namespace ProductionSystem
             this.groupBox4.Size = new System.Drawing.Size(481, 150);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Место";
+            this.groupBox4.Text = "Место*";
             // 
             // checkListLocation
             // 
@@ -188,7 +188,7 @@ namespace ProductionSystem
             this.groupBox5.Size = new System.Drawing.Size(481, 150);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Вид напитков";
+            this.groupBox5.Text = "Вид напитков*";
             // 
             // checkListDrinks
             // 
@@ -210,7 +210,7 @@ namespace ProductionSystem
             this.groupBox6.Size = new System.Drawing.Size(481, 150);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Размер компании";
+            this.groupBox6.Text = "Размер компании*";
             // 
             // checkListCompany
             // 
