@@ -135,7 +135,7 @@ namespace ProductionSystem
             this.groupBox2.Size = new System.Drawing.Size(971, 271);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Фишечки";
+            this.groupBox2.Text = "Набор фишечек";
             // 
             // groupBox3
             // 
