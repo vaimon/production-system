@@ -44,6 +44,7 @@ namespace ProductionSystem
             this.checkListDrinks = new System.Windows.Forms.CheckedListBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.checkListCompany = new System.Windows.Forms.CheckedListBox();
+            this.checkBoxLogging = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -56,10 +57,10 @@ namespace ProductionSystem
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
             this.groupBox1.Controls.Add(this.textOutput);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox1.Location = new System.Drawing.Point(0, 546);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupBox1.Location = new System.Drawing.Point(989, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(995, 398);
+            this.groupBox1.Size = new System.Drawing.Size(731, 722);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Вывод";
@@ -74,8 +75,7 @@ namespace ProductionSystem
             this.textOutput.Margin = new System.Windows.Forms.Padding(5);
             this.textOutput.Name = "textOutput";
             this.textOutput.ReadOnly = true;
-            this.textOutput.ShortcutsEnabled = false;
-            this.textOutput.Size = new System.Drawing.Size(989, 368);
+            this.textOutput.Size = new System.Drawing.Size(725, 692);
             this.textOutput.TabIndex = 0;
             this.textOutput.TabStop = false;
             this.textOutput.Text = "";
@@ -84,7 +84,7 @@ namespace ProductionSystem
             // 
             this.btnStart.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnStart.Enabled = false;
-            this.btnStart.Location = new System.Drawing.Point(741, 497);
+            this.btnStart.Location = new System.Drawing.Point(738, 665);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(242, 43);
             this.btnStart.TabIndex = 1;
@@ -94,13 +94,14 @@ namespace ProductionSystem
             // 
             // checkListFeatures
             // 
+            this.checkListFeatures.CheckOnClick = true;
             this.checkListFeatures.ColumnWidth = 350;
             this.checkListFeatures.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkListFeatures.FormattingEnabled = true;
             this.checkListFeatures.Location = new System.Drawing.Point(3, 27);
             this.checkListFeatures.MultiColumn = true;
             this.checkListFeatures.Name = "checkListFeatures";
-            this.checkListFeatures.Size = new System.Drawing.Size(965, 137);
+            this.checkListFeatures.Size = new System.Drawing.Size(965, 241);
             this.checkListFeatures.TabIndex = 2;
             this.checkListFeatures.ThreeDCheckBoxes = true;
             // 
@@ -108,30 +109,30 @@ namespace ProductionSystem
             // 
             this.rbForward.AutoSize = true;
             this.rbForward.Checked = true;
-            this.rbForward.Location = new System.Drawing.Point(505, 504);
+            this.rbForward.Location = new System.Drawing.Point(80, 672);
             this.rbForward.Name = "rbForward";
-            this.rbForward.Size = new System.Drawing.Size(104, 29);
+            this.rbForward.Size = new System.Drawing.Size(163, 29);
             this.rbForward.TabIndex = 4;
             this.rbForward.TabStop = true;
-            this.rbForward.Text = "Прямой";
+            this.rbForward.Text = "Прямой вывод";
             this.rbForward.UseVisualStyleBackColor = true;
             // 
             // rbBackward
             // 
             this.rbBackward.AutoSize = true;
-            this.rbBackward.Location = new System.Drawing.Point(615, 504);
+            this.rbBackward.Location = new System.Drawing.Point(249, 672);
             this.rbBackward.Name = "rbBackward";
-            this.rbBackward.Size = new System.Drawing.Size(121, 29);
+            this.rbBackward.Size = new System.Drawing.Size(180, 29);
             this.rbBackward.TabIndex = 4;
-            this.rbBackward.Text = "Обратный";
+            this.rbBackward.Text = "Обратный вывод";
             this.rbBackward.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.checkListFeatures);
-            this.groupBox2.Location = new System.Drawing.Point(12, 324);
+            this.groupBox2.Location = new System.Drawing.Point(12, 388);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(971, 167);
+            this.groupBox2.Size = new System.Drawing.Size(971, 271);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Фишечки";
@@ -183,9 +184,9 @@ namespace ProductionSystem
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.checkListDrinks);
-            this.groupBox5.Location = new System.Drawing.Point(12, 168);
+            this.groupBox5.Location = new System.Drawing.Point(12, 180);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(481, 150);
+            this.groupBox5.Size = new System.Drawing.Size(481, 185);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Вид напитков*";
@@ -197,7 +198,7 @@ namespace ProductionSystem
             this.checkListDrinks.FormattingEnabled = true;
             this.checkListDrinks.Location = new System.Drawing.Point(3, 27);
             this.checkListDrinks.Name = "checkListDrinks";
-            this.checkListDrinks.Size = new System.Drawing.Size(475, 120);
+            this.checkListDrinks.Size = new System.Drawing.Size(475, 155);
             this.checkListDrinks.TabIndex = 2;
             this.checkListDrinks.ThreeDCheckBoxes = true;
             this.checkListDrinks.SelectedIndexChanged += new System.EventHandler(this.checkListDrinks_SelectedIndexChanged);
@@ -205,9 +206,9 @@ namespace ProductionSystem
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.checkListCompany);
-            this.groupBox6.Location = new System.Drawing.Point(502, 168);
+            this.groupBox6.Location = new System.Drawing.Point(502, 180);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(481, 150);
+            this.groupBox6.Size = new System.Drawing.Size(481, 185);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Размер компании*";
@@ -219,16 +220,27 @@ namespace ProductionSystem
             this.checkListCompany.FormattingEnabled = true;
             this.checkListCompany.Location = new System.Drawing.Point(3, 27);
             this.checkListCompany.Name = "checkListCompany";
-            this.checkListCompany.Size = new System.Drawing.Size(475, 120);
+            this.checkListCompany.Size = new System.Drawing.Size(475, 155);
             this.checkListCompany.TabIndex = 2;
             this.checkListCompany.ThreeDCheckBoxes = true;
             this.checkListCompany.SelectedIndexChanged += new System.EventHandler(this.checkListCompany_SelectedIndexChanged);
+            // 
+            // checkBoxLogging
+            // 
+            this.checkBoxLogging.AutoSize = true;
+            this.checkBoxLogging.Location = new System.Drawing.Point(501, 672);
+            this.checkBoxLogging.Name = "checkBoxLogging";
+            this.checkBoxLogging.Size = new System.Drawing.Size(230, 29);
+            this.checkBoxLogging.TabIndex = 6;
+            this.checkBoxLogging.Text = "Выводить логи отладки";
+            this.checkBoxLogging.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(995, 944);
+            this.ClientSize = new System.Drawing.Size(1720, 722);
+            this.Controls.Add(this.checkBoxLogging);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox6);
@@ -271,6 +283,7 @@ namespace ProductionSystem
         private System.Windows.Forms.CheckedListBox checkListDrinks;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.CheckedListBox checkListCompany;
+        private System.Windows.Forms.CheckBox checkBoxLogging;
     }
 }
 

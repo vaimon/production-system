@@ -16,8 +16,6 @@ namespace ProductionSystem
     public partial class MainForm : Form
     {
         const String dbFileName = "..\\..\\..\\db\\db.txt";
-        Dictionary<int, Fact> facts;
-        Dictionary<int,Rule> rules;
 
         public MainForm()
         {
@@ -34,71 +32,33 @@ namespace ProductionSystem
 
         }
 
-        InitialFactType parseType(String type)
-        {
-            switch (type)
-            {
-                case "fia": return InitialFactType.DRINK_TYPE;
-                case "fib": return InitialFactType.BUDGET;
-                case "fic": return InitialFactType.COMPANY_SIZE;
-                case "fil": return InitialFactType.LOCATION;
-                case "fi": return InitialFactType.FEATURE;
-                case "fn": return InitialFactType.OPPOSITE_FEATURE;
-                default: throw new Exception("Типы фактов всё сломали :(");
-            }
-        }
+        
 
-        void loadDB()
+       
+        void log(String line, bool isLog = false)
         {
-            using (var sr = new StreamReader(dbFileName))
+            if(isLog)
             {
-                while (!sr.EndOfStream)
-                {
-                    var data = sr.ReadLine().Split(';');
-                    var id = data[0].Split('-');
-                    if (id[0].Equals("f"))
-                    {
-                        facts.Add(int.Parse(id[1]), new Fact(data[1]));
-                    }
-                    else if (id[0].StartsWith("f"))
-                    {
-                        if (id[0].Equals("ff"))
-                        {
-                            facts.Add(int.Parse(id[1]), new FiniteFact(data[1]));
-                            continue;
-                        }
-                        var fact = new InitialFact(data[1], parseType(id[0]));
-                        if(fact.factType == InitialFactType.OPPOSITE_FEATURE)
-                        {
-                            var ids = id[1].Split('/');
-                            (facts[int.Parse(ids[1])] as InitialFact).oppositeFact = int.Parse(ids[0]);
-                            facts.Add(int.Parse(ids[0]),fact);
-                            continue;
-                        }
-                        facts.Add(int.Parse(id[1]), fact);
-                    }
-                    else if (data[0].StartsWith("r"))
-                    {
-                        var premises = data[1].Split(',').Select(x => int.Parse(x.Split('-')[1])).ToList();
-                        rules.Add(int.Parse(id[1]), new Rule(premises,int.Parse(data[2].Split('-')[1]),data[3]));
-                    }
-                    else
-                    {
-                        throw new Exception("Something went wrong");
-                    }
+                if (checkBoxLogging.Checked) {
+                    textOutput.Lines = textOutput.Lines.Append(line + "\n").ToArray();
                 }
             }
-            log("База данных успешно загружена!");
+            else{
+                textOutput.Lines = textOutput.Lines.Append(line + "\n").ToArray();
+            }
         }
 
-        void log(String line)
+        void clearLogs()
         {
-            textOutput.Lines = textOutput.Lines.Append(line).ToArray();
+            textOutput.Clear();
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            log("Мяу");
+            log("Мы начали вывод!");
+            startOutput();
+            showResults();
+            log("Вывод завершён!");
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -134,65 +94,6 @@ namespace ProductionSystem
         private void checkListCompany_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnStart.Enabled = areAllListsContainsCheckedItems();
-        }
-    }
-
-    public class Rule
-    {
-        List<int> premises;
-        int conclusion;
-        String comment;
-
-        public Rule(List<int> premises, int conclusion, string comment)
-        {
-            this.premises = premises;
-            this.conclusion = conclusion;
-            this.comment = comment;
-        }
-    }
-
-    public class Fact
-    {
-        public String fact;
-
-        public Fact(String fact)
-        {
-            this.fact = fact;
-        }
-    }
-
-    public class InitialFact : Fact
-    {
-        public InitialFactType factType;
-        public int oppositeFact;
-
-        public InitialFact(String fact, InitialFactType type, int oppositeFact = -1) : base(fact)
-        {
-            this.factType = type;
-            this.oppositeFact = oppositeFact;
-        }
-    }
-
-    public class FiniteFact: Fact
-    {
-        public FiniteFact(String fact) : base(fact)
-        {
-
-        }
-    }
-
-    public class FactWrapper
-    {
-        public KeyValuePair<int,Fact> fact { get; set; }
-
-        public FactWrapper(KeyValuePair<int, Fact> fact)
-        {
-            this.fact = fact;
-        }
-
-        public override string ToString()
-        {
-            return fact.Value.fact;
         }
     }
 }
