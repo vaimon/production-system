@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace ProductionSystem
 {
+    public enum InitialFactType { DRINK_TYPE, BUDGET, LOCATION, COMPANY_SIZE, FEATURE, COMMON, OPPOSITE_FEATURE };
+
     public class Rule
     {
         public List<int> premises;
@@ -85,6 +87,20 @@ namespace ProductionSystem
         public static KeyValuePair<TKey, TValue> GetEntry<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
             return new KeyValuePair<TKey, TValue>(key, dictionary[key]);
+        }
+    }
+
+    public class Node
+    {
+        List<Node> children;
+        Node parent;
+        List<int> factsBase;
+
+        public Node(Node parent, List<int> factsBase)
+        {
+            this.parent = parent;
+            this.factsBase = factsBase;
+            children = new List<Node>();
         }
     }
 }

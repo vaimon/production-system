@@ -11,7 +11,6 @@ using System.Windows.Forms;
 
 namespace ProductionSystem
 {
-    public enum InitialFactType { DRINK_TYPE, BUDGET, LOCATION, COMPANY_SIZE, FEATURE, COMMON, OPPOSITE_FEATURE };
 
     public partial class MainForm : Form
     {
@@ -55,10 +54,8 @@ namespace ProductionSystem
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            log("Мы начали вывод!");
             startOutput();
             showResults();
-            log("Вывод завершён!");
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -94,6 +91,19 @@ namespace ProductionSystem
         private void checkListCompany_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnStart.Enabled = areAllListsContainsCheckedItems();
+        }
+
+        private void rbBackward_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbBackward.Checked)
+            {
+                FormChooseFinite form = new FormChooseFinite(facts.Where(x => x.Value is FiniteFact).ToList());
+                form.ShowDialog();
+                selectedFiniteFact = form.SelectedFact;
+                log($"Вы выбрали факт (#{selectedFiniteFact.Key}: {selectedFiniteFact.Value.factDescription}) в качестве цели для обратного вывода!");
+                return;
+            }
+            log($"Вы переключились на прямой вывод");
         }
     }
 }

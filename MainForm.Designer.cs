@@ -126,6 +126,7 @@ namespace ProductionSystem
             this.rbBackward.TabIndex = 4;
             this.rbBackward.Text = "Обратный вывод";
             this.rbBackward.UseVisualStyleBackColor = true;
+            this.rbBackward.CheckedChanged += new System.EventHandler(this.rbBackward_CheckedChanged);
             // 
             // groupBox2
             // 

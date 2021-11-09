@@ -12,7 +12,7 @@ namespace ProductionSystem
         Dictionary<int, Fact> facts;
         Dictionary<int, Rule> rules;
         Dictionary<int, Fact> factsBase;
-
+        KeyValuePair<int,Fact> selectedFiniteFact;
         InitialFactType parseType(String type)
         {
             switch (type)
@@ -119,6 +119,19 @@ namespace ProductionSystem
             return res;
         }
 
+        Queue<KeyValuePair<int, Rule>> getPreviousRules(List<int> factsAvailable)
+        {
+            Queue<KeyValuePair<int, Rule>> res = new Queue<KeyValuePair<int, Rule>>();
+            foreach(var rule in rules)
+            {
+                if (factsAvailable.Contains(rule.Value.conclusion))
+                {
+                    res.Enqueue(rule);
+                }
+            }
+            return res;
+        }
+
         void startOutput()
         {
             factsBase = new Dictionary<int, Fact>();
@@ -137,10 +150,12 @@ namespace ProductionSystem
 
         void backwardOutput()
         {
-
+            log("Мы начали обратный вывод!");
+            
         }
         void forwardOutput()
         {
+            log("Мы начали прямой вывод!");
             Queue<KeyValuePair<int, Rule>> ruleQueue;
             int i = 1;
             while((ruleQueue = getAppliableRules()).Count > 0)
