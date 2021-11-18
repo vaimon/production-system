@@ -45,6 +45,7 @@ namespace ProductionSystem
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.checkListCompany = new System.Windows.Forms.CheckedListBox();
             this.checkBoxLogging = new System.Windows.Forms.CheckBox();
+            this.linkEasterEgg = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -60,7 +61,7 @@ namespace ProductionSystem
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBox1.Location = new System.Drawing.Point(989, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(731, 722);
+            this.groupBox1.Size = new System.Drawing.Size(731, 623);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Вывод";
@@ -75,7 +76,7 @@ namespace ProductionSystem
             this.textOutput.Margin = new System.Windows.Forms.Padding(5);
             this.textOutput.Name = "textOutput";
             this.textOutput.ReadOnly = true;
-            this.textOutput.Size = new System.Drawing.Size(725, 692);
+            this.textOutput.Size = new System.Drawing.Size(725, 593);
             this.textOutput.TabIndex = 0;
             this.textOutput.TabStop = false;
             this.textOutput.Text = "";
@@ -84,7 +85,7 @@ namespace ProductionSystem
             // 
             this.btnStart.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnStart.Enabled = false;
-            this.btnStart.Location = new System.Drawing.Point(738, 665);
+            this.btnStart.Location = new System.Drawing.Point(621, 520);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(242, 43);
             this.btnStart.TabIndex = 1;
@@ -101,7 +102,7 @@ namespace ProductionSystem
             this.checkListFeatures.Location = new System.Drawing.Point(3, 27);
             this.checkListFeatures.MultiColumn = true;
             this.checkListFeatures.Name = "checkListFeatures";
-            this.checkListFeatures.Size = new System.Drawing.Size(965, 241);
+            this.checkListFeatures.Size = new System.Drawing.Size(475, 189);
             this.checkListFeatures.TabIndex = 2;
             this.checkListFeatures.ThreeDCheckBoxes = true;
             // 
@@ -109,7 +110,7 @@ namespace ProductionSystem
             // 
             this.rbForward.AutoSize = true;
             this.rbForward.Checked = true;
-            this.rbForward.Location = new System.Drawing.Point(80, 672);
+            this.rbForward.Location = new System.Drawing.Point(581, 415);
             this.rbForward.Name = "rbForward";
             this.rbForward.Size = new System.Drawing.Size(163, 29);
             this.rbForward.TabIndex = 4;
@@ -120,7 +121,7 @@ namespace ProductionSystem
             // rbBackward
             // 
             this.rbBackward.AutoSize = true;
-            this.rbBackward.Location = new System.Drawing.Point(249, 672);
+            this.rbBackward.Location = new System.Drawing.Point(750, 415);
             this.rbBackward.Name = "rbBackward";
             this.rbBackward.Size = new System.Drawing.Size(180, 29);
             this.rbBackward.TabIndex = 4;
@@ -133,7 +134,7 @@ namespace ProductionSystem
             this.groupBox2.Controls.Add(this.checkListFeatures);
             this.groupBox2.Location = new System.Drawing.Point(12, 388);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(971, 271);
+            this.groupBox2.Size = new System.Drawing.Size(481, 219);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Набор фишечек";
@@ -207,7 +208,7 @@ namespace ProductionSystem
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.checkListCompany);
-            this.groupBox6.Location = new System.Drawing.Point(502, 180);
+            this.groupBox6.Location = new System.Drawing.Point(505, 180);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(481, 185);
             this.groupBox6.TabIndex = 5;
@@ -229,18 +230,32 @@ namespace ProductionSystem
             // checkBoxLogging
             // 
             this.checkBoxLogging.AutoSize = true;
-            this.checkBoxLogging.Location = new System.Drawing.Point(501, 672);
+            this.checkBoxLogging.Location = new System.Drawing.Point(627, 485);
             this.checkBoxLogging.Name = "checkBoxLogging";
             this.checkBoxLogging.Size = new System.Drawing.Size(230, 29);
             this.checkBoxLogging.TabIndex = 6;
             this.checkBoxLogging.Text = "Выводить логи отладки";
             this.checkBoxLogging.UseVisualStyleBackColor = true;
             // 
+            // linkEasterEgg
+            // 
+            this.linkEasterEgg.AutoSize = true;
+            this.linkEasterEgg.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.linkEasterEgg.LinkColor = System.Drawing.Color.Black;
+            this.linkEasterEgg.Location = new System.Drawing.Point(618, 579);
+            this.linkEasterEgg.Name = "linkEasterEgg";
+            this.linkEasterEgg.Size = new System.Drawing.Size(249, 25);
+            this.linkEasterEgg.TabIndex = 7;
+            this.linkEasterEgg.TabStop = true;
+            this.linkEasterEgg.Text = "Посмотреть на ход работы :)";
+            this.linkEasterEgg.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkEasterEgg_LinkClicked);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1720, 722);
+            this.ClientSize = new System.Drawing.Size(1720, 623);
+            this.Controls.Add(this.linkEasterEgg);
             this.Controls.Add(this.checkBoxLogging);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -285,6 +300,7 @@ namespace ProductionSystem
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.CheckedListBox checkListCompany;
         private System.Windows.Forms.CheckBox checkBoxLogging;
+        private System.Windows.Forms.LinkLabel linkEasterEgg;
     }
 }
 

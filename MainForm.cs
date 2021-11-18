@@ -105,5 +105,11 @@ namespace ProductionSystem
             }
             log($"Вы переключились на прямой вывод");
         }
+
+        private void linkEasterEgg_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var form = new EasterEgg();
+            form.ShowDialog();
+        }
     }
 }
