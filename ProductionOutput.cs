@@ -119,16 +119,16 @@ namespace ProductionSystem
             return res;
         }
 
-        Queue<KeyValuePair<int, Rule>> getPreviousRules(List<int> factsAvailable)
+        Queue<KeyValuePair<int, Rule>> getPreviousRules()
         {
             Queue<KeyValuePair<int, Rule>> res = new Queue<KeyValuePair<int, Rule>>();
-            foreach(var rule in rules)
-            {
-                if (factsAvailable.Contains(rule.Value.conclusion))
-                {
-                    res.Enqueue(rule);
-                }
-            }
+            //foreach(var rule in rules)
+            //{
+            //    if (factsBase.Contains(rule.Value.conclusion))
+            //    {
+            //        res.Enqueue(rule);
+            //    }
+            //}
             return res;
         }
 
@@ -137,7 +137,7 @@ namespace ProductionSystem
             factsBase = new Dictionary<int, Fact>();
             clearLogs();
             pushSelectedFactsToFactsBase();
-            log($"Факты, с которых мы начинаем:\n{getCurrentFactsBaseState()}", true);
+           
             if (rbBackward.Checked)
             {
                 backwardOutput();
@@ -151,10 +151,18 @@ namespace ProductionSystem
         void backwardOutput()
         {
             log("Мы начали обратный вывод!");
-            
+            log($"Факты, до которых нам надо дойти:\n{getCurrentFactsBaseState()}", true);
+            log($"И с чего мы начинаем:\n{selectedFiniteFact}", true);
+            Queue<KeyValuePair<int, Rule>> ruleQueue;
+            int i = 1;
+            while ((ruleQueue = getPreviousRules()).Count > 0)
+            {
+
+            }
         }
         void forwardOutput()
         {
+            log($"Факты, с которых мы начинаем:\n{getCurrentFactsBaseState()}", true);
             log("Мы начали прямой вывод!");
             Queue<KeyValuePair<int, Rule>> ruleQueue;
             int i = 1;
