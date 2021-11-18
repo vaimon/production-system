@@ -119,19 +119,6 @@ namespace ProductionSystem
             return res;
         }
 
-        Queue<KeyValuePair<int, Rule>> getPreviousRules()
-        {
-            Queue<KeyValuePair<int, Rule>> res = new Queue<KeyValuePair<int, Rule>>();
-            //foreach(var rule in rules)
-            //{
-            //    if (factsBase.Contains(rule.Value.conclusion))
-            //    {
-            //        res.Enqueue(rule);
-            //    }
-            //}
-            return res;
-        }
-
         void startOutput()
         {
             factsBase = new Dictionary<int, Fact>();
@@ -145,6 +132,7 @@ namespace ProductionSystem
             else
             {
                 forwardOutput();
+                showResults();
             }
         }
 
@@ -153,11 +141,17 @@ namespace ProductionSystem
             log("Мы начали обратный вывод!");
             log($"Факты, до которых нам надо дойти:\n{getCurrentFactsBaseState()}", true);
             log($"И с чего мы начинаем:\n{selectedFiniteFact}", true);
-            Queue<KeyValuePair<int, Rule>> ruleQueue;
-            int i = 1;
-            while ((ruleQueue = getPreviousRules()).Count > 0)
+            Node.facts = facts;
+            Node.initialFacts = factsBase;
+            Node.rules = rules;
+            FactNode aim = new FactNode(null, selectedFiniteFact.Key);
+            if (aim.evaluate())
             {
-
+                log("Мы успешно дошли до бара!");
+            }
+            else
+            {
+                log("Этот бар невыводим...");
             }
         }
         void forwardOutput()
@@ -189,6 +183,91 @@ namespace ProductionSystem
                 return;
             }
             log($"Ура! Мы нашли подходящие вам бары! Вот они:\n{string.Join("\n",result.Select(x=>x.Value.factDescription))}");
+        }
+
+        public class Node
+        {
+            public static Dictionary<int, Fact> facts;
+            public static Dictionary<int, Rule> rules;
+            public static Dictionary<int, Fact> initialFacts;
+
+            public static List<int> getParentRules(int fact)
+            {
+                List<int> res = new List<int>();
+                foreach (var rule in rules)
+                {
+                    if (rule.Value.conclusion == fact)
+                    {
+                        res.Add(rule.Key);
+                    }
+                }
+                return res;
+            }
+        }
+
+        public class FactNode : Node
+        {
+            List<RuleNode> children;
+            RuleNode parent;
+            int factNumber;
+
+            public FactNode(RuleNode parent, int factNumber)
+            {
+                this.parent = parent;
+                this.factNumber = factNumber;
+                children = new List<RuleNode>();
+            }
+
+            public bool evaluate()
+            {
+                if(facts[factNumber] is InitialFact)
+                {
+                    return initialFacts.ContainsKey(factNumber);
+
+                }
+                foreach (int rule in getParentRules(factNumber))
+                {
+                    children.Add(new RuleNode(this, rule));
+                }
+                foreach (RuleNode child in children)
+                {
+                    if (child.evaluate())
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        public class RuleNode : Node
+        {
+            List<FactNode> children;
+            FactNode parent;
+            int ruleNumber;
+
+            public RuleNode(FactNode parent, int ruleNumber)
+            {
+                this.parent = parent;
+                this.ruleNumber = ruleNumber;
+                children = new List<FactNode>();
+            }
+
+            public bool evaluate()
+            {
+                foreach (int fact in rules[ruleNumber].premises)
+                {
+                    children.Add(new FactNode(this, fact));
+                }
+                foreach (var child in children)
+                {
+                    if (!child.evaluate())
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
         }
     }
 }

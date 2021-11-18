@@ -89,18 +89,4 @@ namespace ProductionSystem
             return new KeyValuePair<TKey, TValue>(key, dictionary[key]);
         }
     }
-
-    public class Node
-    {
-        List<Node> children;
-        Node parent;
-        List<int> factsBase;
-
-        public Node(Node parent, List<int> factsBase)
-        {
-            this.parent = parent;
-            this.factsBase = factsBase;
-            children = new List<Node>();
-        }
-    }
 }
