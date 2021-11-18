@@ -55,7 +55,6 @@ namespace ProductionSystem
         private void btnStart_Click(object sender, EventArgs e)
         {
             startOutput();
-            showResults();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
