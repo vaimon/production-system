@@ -122,9 +122,8 @@ namespace ProductionSystem
         void startOutput()
         {
             factsBase = new Dictionary<int, Fact>();
-            clearLogs();
             pushSelectedFactsToFactsBase();
-           
+            clearLogs();
             if (rbBackward.Checked)
             {
                 backwardOutput();
@@ -139,19 +138,20 @@ namespace ProductionSystem
         void backwardOutput()
         {
             log("Мы начали обратный вывод!");
-            log($"Факты, до которых нам надо дойти:\n{getCurrentFactsBaseState()}", true);
-            log($"И с чего мы начинаем:\n{selectedFiniteFact}", true);
+            log($"Факты, до которых нам надо дойти:\n{getCurrentFactsBaseState()}");
+            log($"И с чего мы начинаем: #{selectedFiniteFact.Key}: {selectedFiniteFact.Value.factDescription}");
             Node.facts = facts;
             Node.initialFacts = factsBase;
             Node.rules = rules;
+            Node.log = log;
             FactNode aim = new FactNode(null, selectedFiniteFact.Key);
             if (aim.evaluate())
             {
-                log("Мы успешно дошли до бара!");
+                log("Этот бар подходит под заданный набор условий!");
             }
             else
             {
-                log("Этот бар невыводим...");
+                log("С этим набором условий этот бар невыводим...");
             }
         }
         void forwardOutput()
@@ -190,6 +190,7 @@ namespace ProductionSystem
             public static Dictionary<int, Fact> facts;
             public static Dictionary<int, Rule> rules;
             public static Dictionary<int, Fact> initialFacts;
+            public static Action<string, bool> log;
 
             public static List<int> getParentRules(int fact)
             {
@@ -216,27 +217,36 @@ namespace ProductionSystem
                 this.parent = parent;
                 this.factNumber = factNumber;
                 children = new List<RuleNode>();
+                log($"У нас новый узел факта (#{factNumber}).", true);
             }
 
             public bool evaluate()
             {
                 if(facts[factNumber] is InitialFact)
                 {
+                    log("Мы дошли до листового узла.",true);
                     return initialFacts.ContainsKey(factNumber);
-
                 }
                 foreach (int rule in getParentRules(factNumber))
                 {
                     children.Add(new RuleNode(this, rule));
                 }
+                log($"У узла {this} породилось {children.Count} потомков.", true);
                 foreach (RuleNode child in children)
                 {
                     if (child.evaluate())
                     {
+                        log($"У ИЛИ - узла {this} потомок {child} - разрешимый. Остальные можно не рассматривать!", false);
                         return true;
                     }
                 }
+                log($"У ИЛИ - узла {this} все потомки - неразрешимые. Значит, он тоже неразрешим.", false);
                 return false;
+            }
+
+            public override string ToString()
+            {
+                return $"FactNode[#{factNumber}: {facts[factNumber].factDescription}]";
             }
         }
 
@@ -251,6 +261,7 @@ namespace ProductionSystem
                 this.parent = parent;
                 this.ruleNumber = ruleNumber;
                 children = new List<FactNode>();
+                log($"У нас новый узел правила (#{ruleNumber}).", true);
             }
 
             public bool evaluate()
@@ -263,10 +274,17 @@ namespace ProductionSystem
                 {
                     if (!child.evaluate())
                     {
+                        log($"У И - узла {this} потомок {child} - неразрешимый. Остальные можно не рассматривать!", false);
                         return false;
                     }
                 }
+                log($"У И - узла {this} все потомки - разрешимые. Значит, он тоже разрешим.", false);
                 return true;
+            }
+
+            public override string ToString()
+            {
+                return $"RuleNode[#{ruleNumber}: {string.Join(", ", rules[ruleNumber].premises.Select(x => $"#{x}"))} => #{rules[ruleNumber].conclusion}]";
             }
         }
     }

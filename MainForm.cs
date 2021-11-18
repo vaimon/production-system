@@ -92,16 +92,25 @@ namespace ProductionSystem
             btnStart.Enabled = areAllListsContainsCheckedItems();
         }
 
+        void selectAim()
+        {
+            FormChooseFinite form = new FormChooseFinite(facts.Where(x => x.Value is FiniteFact).ToList());
+            form.ShowDialog();
+            selectedFiniteFact = form.SelectedFact;
+            log($"Вы выбрали факт (#{selectedFiniteFact.Key}: {selectedFiniteFact.Value.factDescription}) в качестве цели для обратного вывода!");
+        }
+
         private void rbBackward_CheckedChanged(object sender, EventArgs e)
         {
+            clearLogs();
             if (rbBackward.Checked)
             {
-                FormChooseFinite form = new FormChooseFinite(facts.Where(x => x.Value is FiniteFact).ToList());
-                form.ShowDialog();
-                selectedFiniteFact = form.SelectedFact;
-                log($"Вы выбрали факт (#{selectedFiniteFact.Key}: {selectedFiniteFact.Value.factDescription}) в качестве цели для обратного вывода!");
+                log($"Вы переключились на обратный вывод");
+                btnSelectAim.Visible = true;
+                selectAim();
                 return;
             }
+            btnSelectAim.Visible = false;
             log($"Вы переключились на прямой вывод");
         }
 
@@ -109,6 +118,11 @@ namespace ProductionSystem
         {
             var form = new EasterEgg();
             form.ShowDialog();
+        }
+
+        private void btnSelectAim_Click(object sender, EventArgs e)
+        {
+            selectAim();
         }
     }
 }
