@@ -57,6 +57,10 @@ namespace ProductionSystem
                     }
                     else if (data[0].StartsWith("r"))
                     {
+                        if (data.Count() != 4)
+                        {
+                            throw new ArgumentException("В правиле поплыла структура");
+                        }
                         var premises = data[1].Split(',').Select(x => int.Parse(x.Split('-')[1])).ToList();
                         rules.Add(int.Parse(id[1]), new Rule(premises, int.Parse(data[2].Split('-')[1]), data[3]));
                     }
