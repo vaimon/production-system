@@ -13,6 +13,7 @@ namespace ProductionSystem
         Dictionary<int, Rule> rules;
         Dictionary<int, Fact> factsBase;
         KeyValuePair<int,Fact> selectedFiniteFact;
+        static HashSet<Node> backwardLeaves = new HashSet<Node>();
         InitialFactType parseType(String type)
         {
             switch (type)
@@ -139,6 +140,19 @@ namespace ProductionSystem
             }
         }
 
+        void rebuildTreeAndCount()
+        {
+            foreach(var node in backwardLeaves)
+            {
+                var work = node;
+                while(work.parent != null && !backwardLeaves.Contains(work))
+                {
+                    backwardLeaves.Add(work);
+                    work = work.parent;
+                }
+            }
+        }
+
         void backwardOutput()
         {
             log("Мы начали обратный вывод!");
@@ -148,20 +162,29 @@ namespace ProductionSystem
             Node.initialFacts = factsBase;
             Node.rules = rules;
             Node.log = log;
+            FactNode.factNodeCount = 0;
+            RuleNode.ruleNodeCount = 0;
             FactNode aim = new FactNode(null, selectedFiniteFact.Key);
+            
             if (aim.evaluate())
             {
                 log("Этот бар подходит под заданный набор условий!");
+                rebuildTreeAndCount();
+                log($"Общее количество узлов: И - {RuleNode.ruleNodeCount}, ИЛИ - {FactNode.factNodeCount}");
+                log($"Количество полезных узлов: И - {backwardLeaves.Count(x=> x is RuleNode)}, ИЛИ - {backwardLeaves.Count(x => x is FactNode)}");
             }
             else
             {
                 log("С этим набором условий этот бар невыводим...");
+                log($"Общее количество узлов: И - {RuleNode.ruleNodeCount}, ИЛИ - {FactNode.factNodeCount}");
             }
+            
         }
         void forwardOutput()
         {
             log($"Факты, с которых мы начинаем:\n{getCurrentFactsBaseState()}", true);
             log("Мы начали прямой вывод!");
+            int ruleCount = 0;
             Queue<KeyValuePair<int, Rule>> ruleQueue;
             int i = 1;
             while((ruleQueue = getAppliableRules()).Count > 0)
@@ -172,10 +195,11 @@ namespace ProductionSystem
                     var currentRule = ruleQueue.Dequeue();
                     factsBase.AddEntry(facts.GetEntry(currentRule.Value.conclusion));
                     log($"Применили правило {ruleToString(currentRule)}.\nФактов в базе: {factsBase.Count}");
+                    ruleCount++;
                     log($"{getCurrentFactsBaseState()}", true);
                 }
             }
-            log($"Вывод завершён. Мы перебрали все применимые правила.");
+            log($"Вывод завершён. Мы перебрали все применимые правила. Их оказалось {ruleCount}");
         }
 
         void showResults()
@@ -195,6 +219,8 @@ namespace ProductionSystem
             public static Dictionary<int, Rule> rules;
             public static Dictionary<int, Fact> initialFacts;
             public static Action<string, bool> log;
+            public Node parent;
+            
 
             public static List<int> getParentRules(int fact)
             {
@@ -213,8 +239,8 @@ namespace ProductionSystem
         public class FactNode : Node
         {
             List<RuleNode> children;
-            RuleNode parent;
             int factNumber;
+            public static int factNodeCount = 0; 
 
             public FactNode(RuleNode parent, int factNumber)
             {
@@ -222,6 +248,7 @@ namespace ProductionSystem
                 this.factNumber = factNumber;
                 children = new List<RuleNode>();
                 log($"У нас новый узел факта (#{factNumber}).", true);
+                factNodeCount++;
             }
 
             public bool evaluate()
@@ -229,7 +256,14 @@ namespace ProductionSystem
                 if(facts[factNumber] is InitialFact)
                 {
                     log("Мы дошли до листового узла.",true);
-                    return initialFacts.ContainsKey(factNumber);
+                    if (initialFacts.ContainsKey(factNumber))
+                    {
+                        if (!backwardLeaves.Contains(this)) {
+                            backwardLeaves.Add(this);
+                        }
+                        return true;
+                    }
+                    return false;
                 }
                 foreach (int rule in getParentRules(factNumber))
                 {
@@ -257,15 +291,15 @@ namespace ProductionSystem
         public class RuleNode : Node
         {
             List<FactNode> children;
-            FactNode parent;
             int ruleNumber;
-
+            public static int ruleNodeCount = 0;
             public RuleNode(FactNode parent, int ruleNumber)
             {
                 this.parent = parent;
                 this.ruleNumber = ruleNumber;
                 children = new List<FactNode>();
                 log($"У нас новый узел правила (#{ruleNumber}).", true);
+                ruleNodeCount++;
             }
 
             public bool evaluate()

@@ -53,6 +53,7 @@ namespace ProductionSystem
             this.ClientSize = new System.Drawing.Size(1130, 592);
             this.Controls.Add(this.pictureBox1);
             this.Name = "EasterEgg";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "EasterEgg";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

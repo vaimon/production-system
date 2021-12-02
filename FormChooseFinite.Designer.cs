@@ -73,7 +73,10 @@ namespace ProductionSystem
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(392, 506);
             this.Name = "FormChooseFinite";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Выбор цели";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -280,8 +280,6 @@ namespace ProductionSystem
             this.Controls.Add(this.btnSelectAim);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.groupBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Продукционная система";
             this.Load += new System.EventHandler(this.MainForm_Load);
